@@ -1,0 +1,21 @@
+{
+  "name": "Student-learning_Structure",
+  "description": "",
+  "main": "",
+  "authors": [
+    "PVC Jay <llioujay@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/PVClioujay/Student-learning_Structure",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
