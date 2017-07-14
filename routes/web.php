@@ -20,8 +20,8 @@ Route::get('/', function(){
 });
 
 Route::get('createUser', function(){
-    return view('Home.register');
+    return view('Registe.register');
 });
 
 Route::post('posterManage', "PosterManagerController@index");
-Route::post('register', "HomeController@store");
+Route::post('register', "RegistController@store");
