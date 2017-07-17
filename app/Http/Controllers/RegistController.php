@@ -58,7 +58,7 @@ class RegistController extends Controller
         );
 
 
-        // return view('Registe.index');
+        return view('Home.index');
     }
 
     /**

@@ -11,17 +11,19 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
+// get
 Route::get('/', function(){
     return view('Home.index');
 });
 
 Route::get('createUser', function(){
-    return view('Registe.register');
+    return view('Register.index');
 });
+Route::get('logout', "loginController@logout");
 
-Route::post('posterManage', "PosterManagerController@index");
+// post
+Route::post('posterManage', ['as' => 'login', 'uses' => 'loginController@login']);
 Route::post('register', "RegistController@store");
+
+// Route::post('posterManage', "PosterManagerController@userPost")->middleware('auth');
+

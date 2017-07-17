@@ -4,10 +4,10 @@
             <img src="http://lorempixel.com/50/50" alt="userIcon">
         </div>
         <div class="userName">
-            <span>userName</span>
+            <span>{{ $userName }}</span>
         </div>
-        <div class="gear">
-            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+        <div class="logout">
+            <span><a href="/logout">logout</a></span>
         </div>
         <div class="clearfix"></div>
     </div>

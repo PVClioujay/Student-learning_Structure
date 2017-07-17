@@ -2,28 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Auth\Authenticatable;
 
-class PosterManagerController extends Controller
+class loginController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        if (Auth::check()) {
-            $user = Auth::id();
-            return view('PosterManage.userPost',['userName' => $user]);
-        }else{
-            echo "err";
-        }
     }
 
     /**
@@ -31,9 +24,11 @@ class PosterManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function logout()
     {
         //
+        Auth::logout();
+        return view('Home.index');
     }
 
     /**
@@ -42,9 +37,17 @@ class PosterManagerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        //
+        $userName = $request->username;
+        $userPassword = $request->password;
+
+        if (Auth::attempt(['user_name' => $userName, 'user_password' => $userPassword])) {
+            $user = Auth::id();
+            return view('PosterManage.userPost',['userName' => $user]);
+        } else {
+            echo "error";
+        }
     }
 
     /**
