@@ -19,11 +19,17 @@ Route::get('/', function(){
 Route::get('createUser', function(){
     return view('Register.index');
 });
+
+Route::get('addposter', function(){
+    return view('Add.addPoster');
+});
+
 Route::get('logout', "loginController@logout");
 
 // post
 Route::post('posterManage', ['as' => 'login', 'uses' => 'loginController@login']);
 Route::post('register', "RegistController@store");
+Route::post('add', "PosterManagerController@store");
 
 // Route::post('posterManage', "PosterManagerController@userPost")->middleware('auth');
 

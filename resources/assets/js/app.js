@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 require('jquery-validation');
+require('jquery-ui-bundle');
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -19,6 +21,3 @@ require('jquery-validation');
 // const app = new Vue({
 //     el: '#app'
 // });
-
-
-console.log("mf");

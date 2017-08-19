@@ -19,7 +19,7 @@
     <style>
         body {
             background: url({{asset("images/weather.png")}});
-            background-size: cover;
+            background-size: contain;
         }
 
         .formWrapper {
@@ -45,16 +45,6 @@
             color: white;
         }
     </style>
-
-    <script>
-        const form = document.querySelector('#myform');
-        let formData = new FormData(form);
-
-        function submit(){
-            alert(formData.get("UserName"));
-        }
-
-    </script>
 @endsection
 
 
