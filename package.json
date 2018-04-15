@@ -17,7 +17,6 @@
     "laravel-mix": "0.*",
     "lodash": "^4.17.4",
     "vue": "^2.1.10",
-    "jquety-validation": "^1.17.0",
     "jquery-ui-bundle": "^1.12.1"
   },
   "dependencies": {
