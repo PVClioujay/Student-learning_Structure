@@ -1,0 +1,36 @@
+nginx:
+    # image: nginx:latest -This line will pull nginx from docker hub
+    build: ./nginx/ #This line will follow your dockerfile configure which file are in nginx
+    container_name: container_nginx
+    ports:
+        - 80:80
+    links:
+        - php
+    volumes_from:
+        - app-data
+
+php:
+    # image: php:7.0-fpm
+    build: ./php/
+    container_name: container_php
+    links:
+        - postgres
+    volumes_from:
+        - app-data
+    working_dir: /var/www/html/
+
+postgres:
+    image: postgres:latest
+    container_name: container_postgres
+    environment:
+        POSTGRES_PASSWORD: secret
+        POSTGRES_USER: user
+    ports:
+        - 5432:5432
+
+app-data:
+    image: php:7.0-fpm
+    container_name: app-data_container
+    volumes:
+        - ./www/html/laravelMember:/var/www/html/
+    command: "true"
