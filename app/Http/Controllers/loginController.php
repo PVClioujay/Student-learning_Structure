@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class loginController extends Controller
 {
@@ -42,11 +43,15 @@ class loginController extends Controller
         $userName = $request->username;
         $userPassword = $request->password;
 
-        if (Auth::attempt(['user_name' => $userName, 'user_password' => $userPassword])) {
+        if (Auth::attempt(['name' => $userName, 'password' => $userPassword])) {
             $user = Auth::id();
-            return view('PosterManage.userPost',['userName' => $user]);
+
+            // select user post data
+            $posts = DB::select('select posts.id, posts.user_id, users.name, posts.post from posts inner join users on users.id = posts.user_id');
+
+            return view('PosterManage.userPost',['name' => $userName, 'userId' => $user, 'posts' => $posts]);
         } else {
-            echo "error";
+            return view('Home.index');
         }
     }
 

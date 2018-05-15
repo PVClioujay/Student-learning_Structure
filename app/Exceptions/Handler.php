@@ -56,7 +56,8 @@ class Handler extends ExceptionHandler
     protected function renderExceptionWithWhoops(Exception $e)
     {
         $whoops = new \Whoops\Run;
-        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
+        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+        $whoops->register();
 
         return new \Illuminate\Http\Response(
             $whoops->handleException($e),

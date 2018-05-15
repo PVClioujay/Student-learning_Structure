@@ -29,7 +29,14 @@ Route::get('logout', "loginController@logout");
 // post
 Route::post('posterManage', ['as' => 'login', 'uses' => 'loginController@login']);
 Route::post('register', "RegistController@store");
-Route::post('add', "PosterManagerController@store");
+Route::post('addPost', "PosterManagerController@addPost");
+Route::delete('del', "PosterManagerController@delPost");
 
 // Route::post('posterManage', "PosterManagerController@userPost")->middleware('auth');
 
+
+// Auth::routes();
+
+// Route::get('/some', function(){
+//     return view('some');
+// });

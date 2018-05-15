@@ -1,7 +1,7 @@
 @extends("~layout")
-@extends("~header")
-@section("content")
 
+@section("content")
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="postWrapper">
     <div class="addPoster">
         <a class="btn btn-primary" onclick="openDialog()">Add Poster</a>
@@ -11,47 +11,50 @@
         <thead>
             <tr>
             <th>#</th>
-            <th>Message</th>
+            <th>Post</th>
             <th>Poster</th>
-            <th>Date Time</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td><span class="glyphicon glyphicon-share-alt"></span></td>
-            </tr>
-            <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td><span class="glyphicon glyphicon-share-alt"></span></td>
-            </tr>
-            <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-            <td><span class="glyphicon glyphicon-share-alt"></span></td>
-            </tr>
+            @php
+                $postItem = 0;
+            @endphp
+            @foreach($posts as $post)
+                <tr>
+                    <th scope="row"> {{ $postItem += 1 }} </th>
+                    <td> {{ $post->post }} </td>
+                    <td> {{ $post->name }} </td>
+                    <td>
+                        @if($post->user_id == $userId)
+                            <span class="glyphicon glyphicon-trash" onclick="del({{ $post->id }})"></span>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
-<div id="dialog-form" title="Create poster">
+<?php
+    // print_r($posts);
+?>
+<div id="dialog-form" title="Create Post">
     <textarea name="postText" class="form-control" id="post_text"></textarea>
 </div>
 <script>
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+})
+
 $("#dialog-form").dialog({
     autoOpen: false,
     height: 190,
     width: 400,
     modal: true,
     buttons: {
-        "CreatPoster": creatPoster,
+        "Submit": submit,
         Cancel: function () {
             $("#post_text").val("");
             $(this).dialog("close");
@@ -63,35 +66,39 @@ $("#dialog-form").dialog({
     }
 });
 
-const Header = new Headers({
-    'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
-});
+function submit(){
+    $.ajax({
+        method: 'POST',
+        url: '/addPost',
+        data: {
+            'post': $("#post_text").val(),
+            'user_id': {{ $userId }}
+        }
+    }).done((e)=>{
+        console.log(e);
+        $("#dialog-form").dialog("close");
+        location.reload();
+    }).fail((error)=>{
+        console.log(error);
+    }).always((msg)=>{
+        console.log(msg);
+    })
+}
 
-function creatPoster(){
-    fetch("add",
-        {
-            headers: Header,
-            method: 'post',
-            body: JSON.stringify({
-                postData: document.querySelector("#post_text").value
-            })
+function del(postId){
+    // console.log(userId);
+    $.ajax({
+        type: 'DELETE',
+        url: '/del',
+        data: {
+            'post': postId
         }
-    ).then((response) => {
-        if (response.status >= 200 && response.status < 300) {
-            return response.json()
-        } else {
-            var error = new Error(response.statusText)
-            error.response = response
-            throw error
-        }
-    }).then((data) => {
-        // success
-        cconsole.log(data);
-    }).catch((error) => {
-        // error
-        console.log('failed', error);
-    }).then((errorData) => {
-        console.log(errorData);
+    }).done((e)=>{
+        console.log(e);
+    }).fail((error)=>{
+        console.log(error);
+    }).always((msg)=>{
+        console.log(msg);
     })
 }
 

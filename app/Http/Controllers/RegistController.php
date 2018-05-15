@@ -53,8 +53,8 @@ class RegistController extends Controller
         //     echo $user->user_Name;
         // }
 
-        DB::table('Users')->insert(
-            ['user_Name' => $request->username,'user_Email' => $request->email, 'user_Passwd' => Hash::make($request->passwd)]
+        DB::table('users')->insert(
+            ['name' => $request->username,'email' => $request->email, 'password' => Hash::make($request->passwd)]
         );
 
 

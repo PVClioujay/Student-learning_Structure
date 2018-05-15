@@ -20,7 +20,7 @@ class PosterManagerController extends Controller
         //
         if (Auth::check()) {
             $user = Auth::id();
-            return view('PosterManage.userPost',['userName' => $user]);
+            return view('PosterManage.userPost',['name' => $user]);
         }else{
             echo "err";
         }
@@ -42,10 +42,21 @@ class PosterManagerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function addPost(Request $request)
     {
         //
-        print_r($request);
+        DB::table('posts')->insert(
+            ['post' => $request->post,'user_id' => $request->user_id]
+        );
+        return response()->json($request, 200);
+    }
+
+    public function delPost(Request $request)
+    {
+        //
+        // DB::table('posts')->where('id', '=', $request->post)->delete();
+
+        return response()->json('The post are delete!', 200);
     }
 
     /**

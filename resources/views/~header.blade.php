@@ -4,7 +4,7 @@
             <img src="http://lorempixel.com/50/50" alt="userIcon">
         </div>
         <div class="userName">
-            <span>{{ $userName }}</span>
+            <span>{{ $name }}</span>
         </div>
         <div class="logout">
             <span><a href="/logout">logout</a></span>
